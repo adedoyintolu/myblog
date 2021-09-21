@@ -3,9 +3,9 @@ require('dotenv').config()
 const express = require('express')
 const app = express()
 const port = 8000
-const { dbConnection, Categories } = require('./models')
+const { dbConnection } = require('./models')
 const bodyParser = require('body-parser');
-const Category = require('./controllers/category');
+const { createCategory, getCategory } = require('./controllers/category');
 
 
 async function main() {
@@ -21,11 +21,12 @@ async function main() {
     console.error('Unable to connect to the database:', error);
   }
 
-  Categories.sync()
-
-  Category()
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(bodyParser.json());
+
+  app.post('/categories', createCategory)
+
+  app.get('/categories', getCategory)
 
   app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
