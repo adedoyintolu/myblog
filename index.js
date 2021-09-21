@@ -3,13 +3,14 @@ require('dotenv').config()
 const express = require('express')
 const app = express()
 const port = 8000
-const { dbConnection, Categories, DataTypes } = require('./models')
-const bodyParser = require('body-parser')
+const { dbConnection, Categories } = require('./models')
+const bodyParser = require('body-parser');
+const Category = require('./controllers/category');
 
 
 async function main() {
   app.get('/', (req, res) => {
-    res.send('Tolulope')
+    res.send('My Blog')
     res.sendStatus(200);
   })
 
@@ -22,19 +23,9 @@ async function main() {
 
   Categories.sync()
 
+  Category()
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(bodyParser.json());
-
-  app.post('/categories', async function (req, res) {
-    await Categories.create({
-      name: req.body.name,
-      description: req.body.description,
-      slug: req.body.slug,
-    });
-    console.log("-------------" + req);
-    res.send('New category created')
-    res.sendStatus(200);
-  })
 
   app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
