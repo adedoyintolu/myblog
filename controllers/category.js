@@ -15,15 +15,22 @@ async function createCategory(req, res) {
 
 
   try {
-    await schema.validateAsync(Categories.create({
+    await schema.validate({
       name: req.body.name,
       description: req.body.description,
       slug: req.body.slug
-    }))
+    })
   } catch (error) {
-    return error;
+    return res.send(error);
   }
-  res.send('New category created')
+  res.send('New category created');
+
+  Categories.create({
+    name: req.body.name,
+    description: req.body.description,
+    slug: req.body.slug
+  })
+
 }
 
 async function getCategory(req, res) {
