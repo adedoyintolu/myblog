@@ -7,6 +7,7 @@ const { dbConnection } = require('./models')
 const bodyParser = require('body-parser');
 const { createCategory, getCategory } = require('./controllers/category');
 const { createTag, getTag } = require('./controllers/tag')
+const { getUser, createUser } = require('./controllers/user')
 
 
 async function main() {
@@ -32,6 +33,10 @@ async function main() {
   app.post('/tags', createTag);
 
   app.get('/tags', getTag);
+
+  app.post('/users', createUser);
+
+  app.get('/users', getUser);
 
   app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
