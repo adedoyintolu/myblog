@@ -13,7 +13,6 @@ async function createCategory(req, res) {
     slug: Joi.string().required()
   })
 
-
   try {
     await schema.validate({
       name: req.body.name,
@@ -23,14 +22,13 @@ async function createCategory(req, res) {
   } catch (error) {
     return res.send(error);
   }
-  res.send('New category created');
 
   Categories.create({
     name: req.body.name,
     description: req.body.description,
     slug: req.body.slug
   })
-
+  res.send('New category created');
 }
 
 async function getCategory(req, res) {

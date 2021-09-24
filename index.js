@@ -6,6 +6,7 @@ const port = 8000
 const { dbConnection } = require('./models')
 const bodyParser = require('body-parser');
 const { createCategory, getCategory } = require('./controllers/category');
+const { createTag, getTag } = require('./controllers/tag')
 
 
 async function main() {
@@ -24,9 +25,13 @@ async function main() {
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(bodyParser.json());
 
-  app.post('/categories', createCategory)
+  app.post('/categories', createCategory);
 
-  app.get('/categories', getCategory)
+  app.get('/categories', getCategory);
+
+  app.post('/tags', createTag);
+
+  app.get('/tags', getTag);
 
   app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
