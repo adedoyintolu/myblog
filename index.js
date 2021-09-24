@@ -6,8 +6,10 @@ const port = 8000
 const { dbConnection } = require('./models')
 const bodyParser = require('body-parser');
 const { createCategory, getCategory } = require('./controllers/category');
-const { createTag, getTag } = require('./controllers/tag')
-const { getUser, createUser } = require('./controllers/user')
+const { createTag, getTag } = require('./controllers/tag');
+const { getUser, createUser } = require('./controllers/user');
+const { getComment, createComment } = require('./controllers/comment');
+
 
 
 async function main() {
@@ -37,6 +39,10 @@ async function main() {
   app.post('/users', createUser);
 
   app.get('/users', getUser);
+
+  app.post('/comments', createComment);
+
+  app.get('/comments', getComment);
 
   app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
