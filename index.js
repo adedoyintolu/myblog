@@ -9,7 +9,7 @@ const { createCategory, getCategory } = require('./controllers/category');
 const { createTag, getTag } = require('./controllers/tag');
 const { getUser, createUser } = require('./controllers/user');
 const { getComment, createComment } = require('./controllers/comment');
-
+const { getPost, createPost } = require('./controllers/post');
 
 
 async function main() {
@@ -43,6 +43,10 @@ async function main() {
   app.post('/comments', createComment);
 
   app.get('/comments', getComment);
+
+  app.post('/posts', createPost);
+
+  app.get('/posts', getPost);
 
   app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)

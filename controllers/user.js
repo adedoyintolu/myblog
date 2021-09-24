@@ -8,7 +8,7 @@ async function createUser(req, res) {
   const schema = Joi.object({
     first_name: Joi.string().min(4).required(),
     last_name: Joi.string().required(),
-    email_address: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required(),
+    email_address: Joi.email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required(),
     role: Joi.string().required()
   })
 
