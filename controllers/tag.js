@@ -36,6 +36,8 @@ async function getTag(req, res) {
 }
 
 async function updateTag() {
+  const id = req.params.id;
+
   const schema = Joi.object({
     name: Joi.string().min(4),
     description: Joi.string(),
@@ -55,7 +57,7 @@ async function updateTag() {
       name: req.body.name,
       description: req.body.description,
     }, //what going to be updated
-      { where: { id: 1 } } // where clause
+      { where: { id: id } } // where clause
     )
     res.send('Tag Updated');
   } catch (error) {

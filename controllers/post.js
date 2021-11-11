@@ -51,6 +51,7 @@ async function getPost(req, res) {
 }
 
 async function updatePost() {
+  const id = req.params.id;
 
   const schema = Joi.object({
     title: Joi.string().min(4),
@@ -84,7 +85,7 @@ async function updatePost() {
       tags: req.body.tags,
     }, //what going to be updated
       {
-        where: { id: 1 }  // where clause
+        where: { id: id }  // where clause
       })
     res.send('Post Updated');
   } catch (error) {

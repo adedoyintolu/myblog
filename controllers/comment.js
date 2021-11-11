@@ -40,6 +40,7 @@ async function getComment(req, res) {
 }
 
 async function updateComment() {
+  const id = req.params.id;
 
   const schema = Joi.object({
     content: Joi.string()
@@ -59,7 +60,7 @@ async function updateComment() {
       content: req.body.content
     }, //what going to be updated
       {
-        where: { id: 1 }  // where clause
+        where: { id: id }  // where clause
       })
     res.send('Comment Updated');
   } catch (error) {

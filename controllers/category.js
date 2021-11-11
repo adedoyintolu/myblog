@@ -43,6 +43,8 @@ async function getCategory(req, res) {
 
 async function updateCategory() {
 
+  const id = req.params.id;
+
   const schema = Joi.object({
     name: Joi.string().min(4),
     description: Joi.string(),
@@ -66,7 +68,7 @@ async function updateCategory() {
       slug: req.body.slug
     }, //what going to be updated
       {
-        where: { id: 1 }  // where clause
+        where: { id: id }  // where clause
       })
     res.send('Category Updated');
   } catch (error) {

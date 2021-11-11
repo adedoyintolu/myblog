@@ -46,6 +46,7 @@ async function getUser(req, res) {
 }
 
 async function updateUser() {
+  const id = req.params.id;
 
   const schema = Joi.object({
     first_name: Joi.string().min(4),
@@ -70,7 +71,7 @@ async function updateUser() {
       role: req.body.role
     }, //what going to be updated
       {
-        where: { id: 1 }  // where clause
+        where: { id: id }  // where clause
       })
     res.send('User Updated');
   } catch (error) {
