@@ -14,7 +14,7 @@ async function createCategory(req, res) {
   })
 
   try {
-    await schema.validate({
+    schema.validate({
       name: req.body.name,
       description: req.body.description,
       slug: req.body.slug
@@ -23,12 +23,17 @@ async function createCategory(req, res) {
     return res.send(error);
   }
 
-  Categories.create({
-    name: req.body.name,
-    description: req.body.description,
-    slug: req.body.slug
-  })
-  res.send('New category created');
+  try {
+    await Categories.create({
+      name: req.body.name,
+      description: req.body.description,
+      slug: req.body.slug
+    })
+    res.send('New category created');
+  } catch (error) {
+    return res.send(error);
+  }
+
 }
 
 async function getCategory(req, res) {
@@ -36,5 +41,39 @@ async function getCategory(req, res) {
   res.send(categoryData);
 }
 
+async function updateCategory() {
 
-module.exports = { createCategory, getCategory, Category };
+  const schema = Joi.object({
+    name: Joi.string().min(4),
+    description: Joi.string(),
+    slug: Joi.string()
+  })
+
+  try {
+    schema.validate({
+      name: req.body.name,
+      description: req.body.description,
+      slug: req.body.slug
+    })
+  } catch (error) {
+    return res.send(error);
+  }
+
+  try {
+    await Categories.update({
+      name: req.body.name,
+      description: req.body.description,
+      slug: req.body.slug
+    }, //what going to be updated
+      {
+        where: { id: 1 }  // where clause
+      })
+    res.send('Category Updated');
+  } catch (error) {
+    return res.send(error);
+  }
+
+}
+
+
+module.exports = { createCategory, getCategory, updateCategory, Category };

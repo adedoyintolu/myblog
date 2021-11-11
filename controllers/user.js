@@ -13,7 +13,7 @@ async function createUser(req, res) {
   })
 
   try {
-    await schema.validate({
+    schema.validate({
       first_name: req.body.first_name,
       last_name: req.body.last_name,
       email_address: req.body.email_address,
@@ -23,14 +23,21 @@ async function createUser(req, res) {
     return res.send(error);
   }
 
-  Users.create({
-    first_name: req.body.first_name,
-    last_name: req.body.last_name,
-    email_address: req.body.email_address,
-    role: req.body.role
-  })
+  try {
+    await Users.create({
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
+      email_address: req.body.email_address,
+      role: req.body.role
+    })
 
-  res.send('New user created');
+    res.send('New user created');
+
+  } catch (error) {
+    return res.send(error);
+  }
+
+
 }
 
 async function getUser(req, res) {
@@ -38,5 +45,39 @@ async function getUser(req, res) {
   res.send(UserData);
 }
 
+async function updateUser() {
 
-module.exports = { createUser, getUser, User };
+  const schema = Joi.object({
+    first_name: Joi.string().min(4),
+    last_name: Joi.string(),
+    role: Joi.string()
+  })
+
+  try {
+    schema.validate({
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
+      role: req.body.role
+    })
+  } catch (error) {
+    return res.send(error);
+  }
+
+  try {
+    await Users.update({
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
+      role: req.body.role
+    }, //what going to be updated
+      {
+        where: { id: 1 }  // where clause
+      })
+    res.send('User Updated');
+  } catch (error) {
+    return res.send(error);
+  }
+
+}
+
+
+module.exports = { createUser, getUser, updateUser, User };

@@ -12,7 +12,7 @@ async function createComment(req, res) {
   })
 
   try {
-    await schema.validate({
+    schema.validate({
       post_id: req.body.post_id,
       posted_by: req.body.posted_by,
       content: req.body.content
@@ -21,13 +21,17 @@ async function createComment(req, res) {
     return res.send(error);
   }
 
-  Comments.create({
-    post_id: req.body.post_id,
-    posted_by: req.body.posted_by,
-    content: req.body.content
-  })
+  try {
+    Comments.create({
+      post_id: req.body.post_id,
+      posted_by: req.body.posted_by,
+      content: req.body.content
+    })
 
-  res.send('New comment added');
+    res.send('New comment added');
+  } catch (error) {
+    return res.send(error);
+  }
 }
 
 async function getComment(req, res) {
@@ -35,6 +39,35 @@ async function getComment(req, res) {
   res.send(CommentData);
 }
 
+async function updateComment() {
 
-module.exports = { createComment, getComment, Comment };
+  const schema = Joi.object({
+    content: Joi.string()
+  })
+
+  try {
+    schema.validate({
+      content: req.body.content
+    })
+  } catch (error) {
+    return res.send(error);
+  }
+
+
+  try {
+    await Comments.update({
+      content: req.body.content
+    }, //what going to be updated
+      {
+        where: { id: 1 }  // where clause
+      })
+    res.send('Comment Updated');
+  } catch (error) {
+    return res.send(error);
+  }
+
+}
+
+
+module.exports = { createComment, getComment, updateComment, Comment };
 
