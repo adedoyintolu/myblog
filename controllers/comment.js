@@ -69,6 +69,16 @@ async function updateComment() {
 
 }
 
+async function getCommentById(req, res) {
+  const id = req.params.id;
 
-module.exports = { createComment, getComment, updateComment, Comment };
+  const CommentDataById = await Comments.findAll({
+    where: {
+      id: id
+    }
+  });
+  res.send(CommentDataById);
+}
+
+module.exports = { createComment, getComment, updateComment, getCommentById, Comment };
 

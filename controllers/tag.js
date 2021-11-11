@@ -66,5 +66,15 @@ async function updateTag() {
 
 }
 
+async function getTagById(req, res) {
+  const id = req.params.id;
 
-module.exports = { createTag, getTag, updateTag, Tag };
+  const TagDataById = await Tags.findAll({
+    where: {
+      id: id
+    }
+  });
+  res.send(TagDataById);
+}
+
+module.exports = { createTag, getTag, updateTag, getTagById, Tag };

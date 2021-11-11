@@ -80,5 +80,16 @@ async function updateUser() {
 
 }
 
+async function getUserById(req, res) {
+  const id = req.params.id;
 
-module.exports = { createUser, getUser, updateUser, User };
+  const UserDataById = await Users.findAll({
+    where: {
+      id: id
+    }
+  });
+  res.send(UserDataById);
+}
+
+
+module.exports = { createUser, getUser, updateUser, getUserById, User };

@@ -93,4 +93,15 @@ async function updatePost() {
   }
 }
 
-module.exports = { createPost, getPost, updatePost, Post };
+async function getPostById(req, res) {
+  const id = req.params.id;
+
+  const PostDataById = await Posts.findAll({
+    where: {
+      id: id
+    }
+  });
+  res.send(PostDataById);
+}
+
+module.exports = { createPost, getPost, updatePost, getPostById, Post };

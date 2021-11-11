@@ -77,5 +77,15 @@ async function updateCategory() {
 
 }
 
+async function getCategoryById(req, res) {
+  const id = req.params.id;
 
-module.exports = { createCategory, getCategory, updateCategory, Category };
+  const CategoryDataById = await Categories.findAll({
+    where: {
+      id: id
+    }
+  });
+  res.send(CategoryDataById);
+}
+
+module.exports = { createCategory, getCategory, updateCategory, getCategoryById, Category };
